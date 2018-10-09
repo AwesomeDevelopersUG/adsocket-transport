@@ -1,5 +1,9 @@
 import json
 
+__all__ = [
+    'Message'
+]
+
 
 class Message:
 
