@@ -1,21 +1,27 @@
 import re
 from setuptools import setup, Command
-import os
-from pip.req import parse_requirements
 
 
 def get_requirements():
-    pth = os.path.join(os.path.dirname(__file__), 'REQUIREMENTS')
-    install_reqs = parse_requirements(pth, session='setup_hack')
-    res = [str(ir.req) for ir in install_reqs
-            if str(ir.req) != "None"]
-    return res
+    req = []
+    deps = []
+    with open("REQUIREMENTS", "r") as f:
+        for l in  f.readlines():
+            l = l.strip()
+            if l.startswith("#"):
+                continue
+            elif l.startswith("git+"):
+                deps.append(l)
+            else:
+                req.append(l)
+    return req, deps
 
 
 with open('adsocket_transport/version.py', 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
                         fd.read(), re.MULTILINE).group(1)
 
+reqs, deps = get_requirements()
 
 class TeamCityVersionCommand(Command):
 
@@ -45,7 +51,8 @@ setup(
     cmdclass={
         'tc_version': TeamCityVersionCommand
     },
-    install_requires=get_requirements(),
+    install_requires=reqs,
+    dependency_links=deps,
     packages=['adsocket_transport'],
     zip_safe=True,
     include_package_data=True,
