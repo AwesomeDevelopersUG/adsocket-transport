@@ -23,6 +23,7 @@ with open('adsocket_transport/version.py', 'r') as fd:
 
 reqs, deps = get_requirements()
 
+
 class TeamCityVersionCommand(Command):
 
     description = "Report package version to TeamCity"
@@ -53,7 +54,7 @@ setup(
     },
     install_requires=reqs,
     dependency_links=deps,
-    packages=['adsocket_transport'],
+    packages=['adsocket_transport', 'adsocket_transport.broker'],
     zip_safe=True,
     include_package_data=True,
     platforms='any',
