@@ -8,10 +8,10 @@ class Redis(BaseBroker):
 
     _r = None
 
-    def __init__(self, channel='adsocket', host=None, port=None, max_connections=None, **kwargs):
-        self._host = host or settings.REDIS_HOST
-        self._port = port or settings.REDIS_PORT
-        self._max_connections = max_connections or int(settings.REDIS_MAX_CONNECTIONS)
+    def __init__(self, channel='adsocket', host=None, port=None, max_connections=5, **kwargs):
+        self._host = host
+        self._port = port
+        self._max_connections = max_connections
         self._channel = channel
 
     @property
