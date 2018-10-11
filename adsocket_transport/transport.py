@@ -27,7 +27,7 @@ class ADSocketTransport:
             raise ADSocketException("Could not import broker driver "
                                     "in broker folder")
 
-        if not issubclass(driver_options, BaseBroker):
+        if not issubclass(driver_class, BaseBroker):
             raise ADSocketException("Broker class must be subclass of "
                                     "adsocket_transport.broker.BaseBroker")
 
