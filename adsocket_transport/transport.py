@@ -83,3 +83,18 @@ class ADSocketTransport:
                 "If you want to send raw data use `send_data` method")
 
         self._broker.publish(message)
+
+    def store_credentials(self, key, data, ttl=None):
+        """
+        Store credentials or any other data ia broker
+
+        :param key: Key of stored data
+        :type key: str
+        :param data: data itself
+        :type data: dict
+        :param ttl: for how long data should be visible in WebSocket
+        :type ttl: int
+        :return: void
+        :rtype: Nont
+        """
+        self._broker.store_credentials(key, data, ttl)
