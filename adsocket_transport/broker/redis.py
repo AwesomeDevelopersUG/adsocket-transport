@@ -8,9 +8,11 @@ class Redis(BaseBroker):
 
     _r = None
 
-    def __init__(self, channel='adsocket', host=None, port=None, max_connections=5, **kwargs):
+    def __init__(self, channel='adsocket', host=None, port=None, db=0,
+                 max_connections=5, **kwargs):
         self._host = host
         self._port = port
+        self._db = db
         self._max_connections = max_connections
         self._channel = channel
 
@@ -20,6 +22,7 @@ class Redis(BaseBroker):
             self._r = redis.StrictRedis(
                 host=self._host,
                 port=self._port,
+                db=self._db,
                 max_connections=self._max_connections,
                 decode_responses=True)
         return self._r
