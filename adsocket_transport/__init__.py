@@ -1,2 +1,2 @@
-from .transport import ADSocketTransport  # noqa
+from .transport import ADSocketTransport, ADSocketAsyncTransport  # noqa
 from .message import Message  # noqa

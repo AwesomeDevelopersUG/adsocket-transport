@@ -1,7 +1,7 @@
 import json
-import redis
 
 from . import BaseBroker
+import aioredis
 
 
 class Redis(BaseBroker):
@@ -15,22 +15,22 @@ class Redis(BaseBroker):
         self._db = db
         self._max_connections = max_connections
         self._channel = channel
+        self._loop = kwargs.get('loop')
 
     @property
-    def _redis(self):
+    async def _redis(self):
         if not self._r:
-            self._r = redis.StrictRedis(
-                host=self._host,
-                port=self._port,
+            self._r = await aioredis.create_redis(
+                self._host,
                 db=self._db,
-                max_connections=self._max_connections,
-                decode_responses=True)
+                loop=self._loop)
         return self._r
 
-    def publish(self, message):
-        self._redis.publish(self._channel, message.to_json())
+    async def publish(self, message):
+        r = await self._redis
+        await r.publish(self._channel, message.to_json())
 
-    def store_credentials(self, key, data, ttl=None):
+    async def store_credentials(self, key, data, ttl=None):
         """
         Store user authentication token to redis
         :param key:
@@ -38,8 +38,8 @@ class Redis(BaseBroker):
         :param ttl:
         :return:
         """
-
-        self._redis.set(key, json.dumps(data), ttl)
+        r = await self._redis
+        await r.set(key, json.dumps(data), ttl)
 
 
 broker = Redis

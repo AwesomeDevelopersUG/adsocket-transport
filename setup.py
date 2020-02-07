@@ -60,5 +60,15 @@ setup(
     platforms='any',
     license='MIT',
     description="ADSocket transport library",
-    version=version
+    extras_require={
+        "aioredis": ["aioredis==1.3.1"],
+    },
+    version=version,
+    classifiers=[
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "License :: MIT License",
+        "Operating System :: OS Independent",
+        "Development Status :: 4 - Beta"
+    ],
 )
