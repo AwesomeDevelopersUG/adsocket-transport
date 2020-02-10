@@ -18,7 +18,7 @@ class Redis(BaseBroker):
         self._loop = kwargs.get('loop')
 
     @property
-    async def _redis(self):
+    async def _redis(self) -> aioredis.Redis:
         if not self._r:
             self._r = await aioredis.create_redis(
                 self._host,
@@ -39,7 +39,7 @@ class Redis(BaseBroker):
         :return:
         """
         r = await self._redis
-        await r.set(key, json.dumps(data), ttl)
+        await r.set(key, json.dumps(data), expire=ttl)
 
 
 broker = Redis
