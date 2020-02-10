@@ -24,6 +24,10 @@ with open('adsocket_transport/version.py', 'r') as fd:
 reqs, deps = get_requirements()
 
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+
 class TeamCityVersionCommand(Command):
 
     description = "Report package version to TeamCity"
@@ -60,6 +64,8 @@ setup(
     platforms='any',
     license='MIT',
     description="ADSocket transport library",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     extras_require={
         "aioredis": ["aioredis==1.3.1"],
     },
@@ -67,7 +73,7 @@ setup(
     classifiers=[
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
-        "License :: MIT License",
+        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Development Status :: 4 - Beta"
     ],
