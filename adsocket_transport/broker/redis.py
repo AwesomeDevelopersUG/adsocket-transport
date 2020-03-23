@@ -19,7 +19,7 @@ class Redis(BaseBroker):
     @property
     def _redis(self):
         if not self._r:
-            self._r = redis.StrictRedis(
+            self._r = redis.Redis(
                 host=self._host,
                 port=self._port,
                 db=self._db,
